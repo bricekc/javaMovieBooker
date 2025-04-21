@@ -1,4 +1,4 @@
-package com.example.JavaMovieBooker.domain.repositories;
+package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence;
 
 import com.example.JavaMovieBooker.domain.entities.User;
 import org.springframework.data.repository.CrudRepository;
