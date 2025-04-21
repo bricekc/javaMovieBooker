@@ -1,13 +1,17 @@
 package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence;
 
+import com.example.JavaMovieBooker.domain.entities.User;
 import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @Column(columnDefinition = "uuid")
+    private UUID id;
 
     private String email;
 
@@ -28,11 +32,19 @@ public class UserEntity {
         this.lastName = lastName;
     }
 
-    public String getId() {
+    public UserEntity(UUID id, String email, String password, String firstName, String lastName) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

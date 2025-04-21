@@ -6,6 +6,7 @@ import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.Us
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
@@ -19,5 +20,16 @@ public class UserService implements IUserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> getUserById(String id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public User createUser(User user) {
+        userRepository.save(user);
+        return user;
     }
 }

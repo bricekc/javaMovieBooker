@@ -1,31 +1,20 @@
-package com.example.JavaMovieBooker.domain.entities;
+package com.example.JavaMovieBooker.web.dtos;
+
+import com.example.JavaMovieBooker.domain.entities.User;
 
 import java.util.UUID;
 
-public class User {
+public class UserDTO {
     private UUID id;
-
     private String email;
-
-    private String password;
-
     private String firstName;
-
     private String lastName;
 
-    public User() {}
+    public UserDTO() {}
 
-    public User(String email, String password, String firstName, String lastName) {
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public User(UUID id, String email, String password, String firstName, String lastName) {
+    public UserDTO(UUID id, String email, String firstName, String lastName) {
         this.id = id;
         this.email = email;
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -46,14 +35,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -69,4 +50,9 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public static UserDTO fromDomain(User user) {
+        return new UserDTO(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName());
+    }
+
 }

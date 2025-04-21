@@ -2,6 +2,7 @@ package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence;
 
 import com.example.JavaMovieBooker.application.ports.output.IUserRepository;
 import com.example.JavaMovieBooker.domain.entities.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,9 +13,11 @@ import java.util.stream.StreamSupport;
 @Repository
 public class UserRepository implements IUserRepository {
     private final JpaUserRepository jpaRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserRepository(JpaUserRepository jpaRepo) {
+    public UserRepository(JpaUserRepository jpaRepo, PasswordEncoder passwordEncoder) {
         this.jpaRepo = jpaRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -31,11 +34,13 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public void save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         jpaRepo.save(convertToEntity(user));
     }
 
     private User convertToDomain(UserEntity userEntity) {
         return new User(
+                userEntity.getId(),
                 userEntity.getEmail(),
                 userEntity.getPassword(),
                 userEntity.getFirstName(),
