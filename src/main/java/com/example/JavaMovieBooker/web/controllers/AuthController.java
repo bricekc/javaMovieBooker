@@ -3,6 +3,7 @@ package com.example.JavaMovieBooker.web.controllers;
 import com.example.JavaMovieBooker.application.services.UserService;
 import com.example.JavaMovieBooker.domain.entities.User;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.CreateUserRequest;
+import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.LoginRequest;
 import com.example.JavaMovieBooker.web.dtos.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,7 +32,22 @@ public class AuthController {
                 request.firstName(),
                 request.lastName()
         );
-        this.userService.createUser(user);
+        try {
+            user = this.userService.createUser(user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
         return ResponseEntity.ok(UserDTO.fromDomain(user));
+    }
+
+    @Operation(summary = "Login a user")
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+        boolean isAuthenticated = this.userService.login(request);
+        if (isAuthenticated) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
     }
 }

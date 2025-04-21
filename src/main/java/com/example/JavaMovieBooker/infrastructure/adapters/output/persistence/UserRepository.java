@@ -13,16 +13,14 @@ import java.util.stream.StreamSupport;
 @Repository
 public class UserRepository implements IUserRepository {
     private final JpaUserRepository jpaRepo;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserRepository(JpaUserRepository jpaRepo, PasswordEncoder passwordEncoder) {
+    public UserRepository(JpaUserRepository jpaRepo) {
         this.jpaRepo = jpaRepo;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public List<User> findAll() {
-        return StreamSupport.stream(jpaRepo.findAll().spliterator(), false)
+        return jpaRepo.findAll().stream()
                 .map(this::convertToDomain)
                 .collect(Collectors.toList());
     }
@@ -33,8 +31,12 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        return jpaRepo.findByEmail(email).map(this::convertToDomain);
+    }
+
+    @Override
     public void save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         jpaRepo.save(convertToEntity(user));
     }
 

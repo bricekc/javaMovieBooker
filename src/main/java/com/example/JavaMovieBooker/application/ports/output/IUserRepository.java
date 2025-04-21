@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface IUserRepository {
     Optional<User> findById(String id);
+    Optional<User> findByEmail(String email);
     void save(User user);
     List<User> findAll();
 }
