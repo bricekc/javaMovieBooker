@@ -43,10 +43,10 @@ public class AuthController {
     @Operation(summary = "Login a user")
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        boolean isAuthenticated = this.userService.login(request);
-        if (isAuthenticated) {
-            return ResponseEntity.ok("Login successful");
-        } else {
+        try {
+        String token = this.userService.login(request);
+            return ResponseEntity.ok(token);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
     }

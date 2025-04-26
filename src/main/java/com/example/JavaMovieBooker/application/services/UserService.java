@@ -15,10 +15,12 @@ public class UserService implements IUserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -42,11 +44,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Boolean login(LoginRequest loginRequest) {
+    public String login(LoginRequest loginRequest) {
         Optional<User> user = userRepository.findByEmail(loginRequest.email());
         if (user.isPresent()) {
-            return passwordEncoder.matches(loginRequest.password(), user.get().getPassword());
+            if (!passwordEncoder.matches(loginRequest.password(), user.get().getPassword())) {
+                throw new IllegalArgumentException("Invalid password");
+            }
+            return this.jwtUtil.generateAccessToken(user.get().getEmail());
         }
-        return false;
+        throw new IllegalArgumentException("User not found");
     }
 }

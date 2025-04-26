@@ -10,5 +10,5 @@ public interface IUserService {
     List<User> getAllUsers();
     Optional<User> getUserById(String id);
     User createUser(User user);
-    Boolean login(LoginRequest loginRequest);
+    String login(LoginRequest loginRequest);
 }
