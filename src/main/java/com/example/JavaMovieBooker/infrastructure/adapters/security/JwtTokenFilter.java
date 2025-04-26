@@ -1,6 +1,6 @@
 package com.example.JavaMovieBooker.infrastructure.adapters.security;
 
-import com.example.JavaMovieBooker.application.services.JwtUtil;
+import com.example.JavaMovieBooker.application.services.JwtUtilService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,10 +17,10 @@ import java.io.IOException;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
-    private final JwtUtil jwtUtil;
+    private final JwtUtilService jwtUtil;
     private UserDetailsService userDetailsService;
 
-    public JwtTokenFilter(JwtUtil jwtUtil) {
+    public JwtTokenFilter(JwtUtilService jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
 

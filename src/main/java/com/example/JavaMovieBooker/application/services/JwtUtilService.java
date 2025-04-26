@@ -1,6 +1,6 @@
 package com.example.JavaMovieBooker.application.services;
 
-import com.example.JavaMovieBooker.application.ports.input.IJwtUtil;
+import com.example.JavaMovieBooker.application.ports.input.IJwtUtilService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +10,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Service
-public class JwtUtil implements IJwtUtil {
+public class JwtUtilService implements IJwtUtilService {
     private final Key jwtSecretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     public String generateAccessToken(String userEmail) {
