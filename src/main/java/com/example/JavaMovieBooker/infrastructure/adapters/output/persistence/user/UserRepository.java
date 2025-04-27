@@ -1,14 +1,12 @@
-package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence;
+package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.user;
 
 import com.example.JavaMovieBooker.application.ports.output.IUserRepository;
 import com.example.JavaMovieBooker.domain.entities.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Repository
 public class UserRepository implements IUserRepository {

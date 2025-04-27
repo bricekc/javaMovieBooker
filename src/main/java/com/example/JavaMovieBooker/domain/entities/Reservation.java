@@ -1,35 +1,30 @@
-package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence;
-
-import jakarta.persistence.*;
+package com.example.JavaMovieBooker.domain.entities;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "reservation")
-public class ReservationEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+public class Reservation {
     private UUID id;
 
-    @Column(nullable = false)
     private Long movieId;
 
-    @Column(nullable = false)
     private LocalDateTime reservationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    private UUID userId;
 
-    public ReservationEntity() {}
+    public Reservation() {}
 
-    public ReservationEntity(UUID id, Long movieId, LocalDateTime reservationDate, UserEntity user) {
+    public Reservation(Long movieId, LocalDateTime reservationDate, UUID userId) {
+        this.movieId = movieId;
+        this.reservationDate = reservationDate;
+        this.userId = userId;
+    }
+
+    public Reservation(UUID id, Long movieId, LocalDateTime reservationDate, UUID userId) {
         this.id = id;
         this.movieId = movieId;
         this.reservationDate = reservationDate;
-        this.user = user;
+        this.userId = userId;
     }
 
     public UUID getId() {
@@ -56,11 +51,11 @@ public class ReservationEntity {
         this.reservationDate = reservationDate;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }

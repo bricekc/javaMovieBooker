@@ -1,6 +1,6 @@
-package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence;
+package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.user;
 
-import com.example.JavaMovieBooker.domain.entities.User;
+import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.reservation.ReservationEntity;
 import jakarta.persistence.*;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.example.JavaMovieBooker.application.services;
 
 
-import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.UserRepository;
+import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

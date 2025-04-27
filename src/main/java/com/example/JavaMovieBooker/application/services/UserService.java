@@ -3,7 +3,7 @@ package com.example.JavaMovieBooker.application.services;
 import com.example.JavaMovieBooker.application.ports.input.IUserService;
 import com.example.JavaMovieBooker.domain.entities.User;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.LoginRequest;
-import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.UserRepository;
+import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -26,7 +26,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @Operation(summary = "List all Users")
+    @Operation(
+            summary = "List all Users",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
     @GetMapping("")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> dtos = userService.getAllUsers()
