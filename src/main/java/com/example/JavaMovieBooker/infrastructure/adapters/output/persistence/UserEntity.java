@@ -3,6 +3,7 @@ package com.example.JavaMovieBooker.infrastructure.adapters.output.persistence;
 import com.example.JavaMovieBooker.domain.entities.User;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +23,9 @@ public class UserEntity {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReservationEntity> reservations;
 
     public UserEntity() {}
 
