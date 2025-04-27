@@ -2,10 +2,13 @@ package com.example.JavaMovieBooker.application.services;
 
 import com.example.JavaMovieBooker.application.ports.input.IMovieService;
 import com.example.JavaMovieBooker.domain.entities.Genre;
+import com.example.JavaMovieBooker.domain.entities.MovieDetail;
 import com.example.JavaMovieBooker.domain.entities.MoviePage;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.TmdbGenreResponse;
+import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.TmdbMovieDetailResponse;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.TmdbMovieResponse;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.mapper.GenreMapper;
+import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.mapper.MovieDetailMapper;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.mapper.MovieMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -46,5 +49,14 @@ public class MovieService implements IMovieService {
                 .bodyToMono(TmdbGenreResponse.class)
                 .map(tmdbGenreResponse -> GenreMapper.mapToGenreList(tmdbGenreResponse.getGenres()));
 
+    }
+
+    @Override
+    public Mono<MovieDetail> getMovieDetail(int id) {
+        return webClient.get()
+                .uri("/movie/" + id)
+                .retrieve()
+                .bodyToMono(TmdbMovieDetailResponse.class)
+                .map(MovieDetailMapper::mapToMovieDetail);
     }
 }

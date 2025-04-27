@@ -2,10 +2,12 @@ package com.example.JavaMovieBooker.web.controllers;
 
 import com.example.JavaMovieBooker.application.services.MovieService;
 import com.example.JavaMovieBooker.domain.entities.Genre;
+import com.example.JavaMovieBooker.domain.entities.MovieDetail;
 import com.example.JavaMovieBooker.domain.entities.MoviePage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -32,5 +34,11 @@ public class MovieController {
     @GetMapping("/genres")
     public Mono<List<Genre>> getGenres() {
         return movieService.getGenres();
+    }
+
+    @Operation(summary = "Get movie details")
+    @GetMapping("/{id}")
+    public Mono<MovieDetail> getMovieDetail(@PathVariable int id) {
+        return movieService.getMovieDetail(id);
     }
 }
