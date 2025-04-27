@@ -14,6 +14,11 @@ public class Reservation {
 
     public Reservation() {}
 
+    public Reservation(Long movieId, LocalDateTime reservationDate) {
+        this.movieId = movieId;
+        this.reservationDate = reservationDate;
+    }
+
     public Reservation(Long movieId, LocalDateTime reservationDate, UUID userId) {
         this.movieId = movieId;
         this.reservationDate = reservationDate;

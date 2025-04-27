@@ -33,8 +33,7 @@ public class ReservationController {
     ) {
         Reservation reservation = new Reservation(
                 createReservationRequest.movieId(),
-                createReservationRequest.reservationDate(),
-                createReservationRequest.userId()
+                createReservationRequest.reservationDate()
         );
         try {
             Reservation newReservation = this.reservationService.save(reservation, request);

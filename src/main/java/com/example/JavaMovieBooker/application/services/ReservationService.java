@@ -25,11 +25,8 @@ public class ReservationService implements IReservationService {
         String jwt = jwtUtil.getJwtFromRequest(request);
         if (jwtUtil.validate(jwt)) {
             User user = userRepository.findByEmail(jwtUtil.getUserEmail(jwt)).orElseThrow(() -> new RuntimeException("User not found"));
-            if (user.getId() == reservation.getUserId()) {
-                return reservationRepository.save(reservation);
-            } else {
-                throw new RuntimeException("User ID does not match the reservation");
-            }
+            reservation.setUserId(user.getId());
+            return reservationRepository.save(reservation);
         } else {
             throw new RuntimeException("Invalid token");
         }

@@ -5,6 +5,5 @@ import java.util.UUID;
 
 public record CreateReservationRequest(
     Long movieId,
-    LocalDateTime reservationDate,
-    UUID userId
+    LocalDateTime reservationDate
 ) {}
