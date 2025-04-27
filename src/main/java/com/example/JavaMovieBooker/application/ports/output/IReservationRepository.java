@@ -2,6 +2,9 @@ package com.example.JavaMovieBooker.application.ports.output;
 
 import com.example.JavaMovieBooker.domain.entities.Reservation;
 
+import java.util.UUID;
+
 public interface IReservationRepository {
-    void save(Reservation reservation);
+    Reservation save(Reservation reservation);
+    Reservation findById(UUID id);
 }
