@@ -1,6 +1,7 @@
 package com.example.JavaMovieBooker.web.controllers;
 
 import com.example.JavaMovieBooker.application.services.MovieService;
+import com.example.JavaMovieBooker.domain.entities.Genre;
 import com.example.JavaMovieBooker.domain.entities.MoviePage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
@@ -23,5 +26,11 @@ public class MovieController {
     @GetMapping("")
     public Mono<MoviePage> getMovies() {
         return movieService.getMovies();
+    }
+
+    @Operation(summary = "Get all genres")
+    @GetMapping("/genres")
+    public Mono<List<Genre>> getGenres() {
+        return movieService.getGenres();
     }
 }
