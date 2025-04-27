@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 public interface IMovieService {
-    Mono<MoviePage> getMovies();
+    Mono<MoviePage> getMovies(String page);
     Mono<List<Genre>> getGenres();
     Mono<MovieDetail> getMovieDetail(int id);
 }

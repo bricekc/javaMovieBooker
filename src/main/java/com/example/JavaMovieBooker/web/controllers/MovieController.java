@@ -6,10 +6,7 @@ import com.example.JavaMovieBooker.domain.entities.MovieDetail;
 import com.example.JavaMovieBooker.domain.entities.MoviePage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -26,8 +23,8 @@ public class MovieController {
 
     @Operation(summary = "Get all movies")
     @GetMapping("")
-    public Mono<MoviePage> getMovies() {
-        return movieService.getMovies();
+    public Mono<MoviePage> getMovies(@RequestParam(required = false) String page) {
+        return movieService.getMovies(page);
     }
 
     @Operation(summary = "Get all genres")

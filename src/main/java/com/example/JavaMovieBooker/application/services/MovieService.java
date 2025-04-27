@@ -26,9 +26,13 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public Mono<MoviePage> getMovies() {
+    public Mono<MoviePage> getMovies(String page) {
+        String uri = "/movie/popular";
+        if (page != null && !page.isEmpty()) {
+            uri += "?page=" + page;
+        }
         return webClient.get()
-                .uri("/movie/popular")
+                .uri(uri)
                 .retrieve()
                 .bodyToMono(TmdbMovieResponse.class)
                 .map(tmdbResponse -> new MoviePage(
