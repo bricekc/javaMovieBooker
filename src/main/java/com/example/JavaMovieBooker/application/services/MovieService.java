@@ -63,4 +63,24 @@ public class MovieService implements IMovieService {
                 .bodyToMono(TmdbMovieDetailResponse.class)
                 .map(MovieDetailMapper::mapToMovieDetail);
     }
+
+    @Override
+    public Mono<MoviePage> searchMovies(String query, String page) {
+        String uri = "/search/movie?query=" + query;
+        if (page != null && !page.isEmpty()) {
+            uri += "&page=" + page;
+        }
+        return webClient.get()
+                .uri(uri)
+                .retrieve()
+                .bodyToMono(TmdbMovieResponse.class)
+                .map(tmdbResponse -> new MoviePage(
+                        tmdbResponse.getPage(),
+                        tmdbResponse.getTotal_pages(),
+                        tmdbResponse.getTotal_results(),
+                        tmdbResponse.getResults().stream()
+                                .map(MovieMapper::mapToMovie)
+                                .collect(Collectors.toList())
+                ));
+    }
 }

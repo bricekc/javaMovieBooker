@@ -38,4 +38,10 @@ public class MovieController {
     public Mono<MovieDetail> getMovieDetail(@PathVariable int id) {
         return movieService.getMovieDetail(id);
     }
+
+    @Operation(summary = "Search movies")
+    @GetMapping("/search")
+    public Mono<MoviePage> searchMovie(@RequestParam String search, @RequestParam(required = false) String page) {
+        return this.movieService.searchMovies(search, page);
+    }
 }
