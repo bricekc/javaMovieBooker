@@ -4,6 +4,7 @@ import com.example.JavaMovieBooker.application.ports.input.IUserService;
 import com.example.JavaMovieBooker.domain.entities.User;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.LoginRequest;
 import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +54,15 @@ public class UserService implements IUserService {
             return this.jwtUtil.generateAccessToken(user.get().getEmail());
         }
         throw new IllegalArgumentException("User not found");
+    }
+
+    @Override
+    public User getMe(HttpServletRequest request) {
+        String jwt = jwtUtil.getJwtFromRequest(request);
+        if (jwtUtil.validate(jwt)) {
+            return userRepository.findByEmail(jwtUtil.getUserEmail(jwt)).orElseThrow(() -> new RuntimeException("User not found"));
+        } else {
+            throw new RuntimeException("Invalid token");
+        }
     }
 }
