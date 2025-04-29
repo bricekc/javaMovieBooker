@@ -8,6 +8,8 @@ import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.us
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ReservationService implements IReservationService {
     private final ReservationRepository reservationRepository;
@@ -27,6 +29,21 @@ public class ReservationService implements IReservationService {
             User user = userRepository.findByEmail(jwtUtil.getUserEmail(jwt)).orElseThrow(() -> new RuntimeException("User not found"));
             reservation.setUserId(user.getId());
             return reservationRepository.save(reservation);
+        } else {
+            throw new RuntimeException("Invalid token");
+        }
+    }
+
+    @Override
+    public Reservation findById(UUID id, HttpServletRequest request) {
+        String jwt = jwtUtil.getJwtFromRequest(request);
+        if (jwtUtil.validate(jwt)) {
+            User user = userRepository.findByEmail(jwtUtil.getUserEmail(jwt)).orElseThrow(() -> new RuntimeException("User not found"));
+            Reservation reservation = reservationRepository.findById(id);
+            if (user.getId() != reservation.getUserId()) {
+                throw new RuntimeException("You do not have permission to access this reservation");
+            }
+            return reservation;
         } else {
             throw new RuntimeException("Invalid token");
         }

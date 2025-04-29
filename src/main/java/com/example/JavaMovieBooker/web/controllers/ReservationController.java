@@ -8,10 +8,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/reservations")
@@ -41,5 +40,18 @@ public class ReservationController {
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Invalid reservation data", e);
         }
+    }
+
+    @GetMapping("/{id}")
+    @Operation(
+            summary = "Get one reservation",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public ResponseEntity<ReservationDTO> findOneReservation(
+            @PathVariable UUID id,
+            HttpServletRequest request
+    ) {
+        Reservation reservation = this.reservationService.findById(id, request);
+        return ResponseEntity.ok(ReservationDTO.fromDomain(reservation));
     }
 }
