@@ -60,4 +60,19 @@ public class ReservationService implements IReservationService {
             throw new RuntimeException("Invalid token");
         }
     }
+
+    @Override
+    public void deleteReservationById(UUID id, HttpServletRequest request) {
+        String jwt = jwtUtil.getJwtFromRequest(request);
+        if (jwtUtil.validate(jwt)) {
+            User user = userRepository.findByEmail(jwtUtil.getUserEmail(jwt)).orElseThrow(() -> new RuntimeException("User not found"));
+            Reservation reservation = reservationRepository.findById(id);
+            if (user.getId() != reservation.getUserId()) {
+                throw new RuntimeException("You do not have permission to delete this reservation");
+            }
+            reservationRepository.deleteReservationById(id);
+        } else {
+            throw new RuntimeException("Invalid token");
+        }
+    }
 }

@@ -32,6 +32,10 @@ public class ReservationRepository implements IReservationRepository {
         return jpaRepo.findAllByUserId(id).stream().map(this::convertToDomain).toList();
     }
 
+    public void deleteReservationById(UUID id) {
+        jpaRepo.deleteById(id);
+    }
+
     private Reservation convertToDomain(ReservationEntity reservationEntity) {
         return new Reservation(
                 reservationEntity.getId(),

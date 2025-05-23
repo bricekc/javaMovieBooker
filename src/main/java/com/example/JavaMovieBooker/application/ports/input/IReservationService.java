@@ -10,4 +10,5 @@ public interface IReservationService {
     Reservation save(Reservation reservation, HttpServletRequest request);
     Reservation findById(UUID id, HttpServletRequest request);
     List<Reservation> findAllByUser(HttpServletRequest request);
+    public void deleteReservationById(UUID id, HttpServletRequest request);
 }

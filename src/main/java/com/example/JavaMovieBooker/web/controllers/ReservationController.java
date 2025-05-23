@@ -65,4 +65,17 @@ public class ReservationController {
         List<Reservation> reservations = this.reservationService.findAllByUser(request);
         return ResponseEntity.ok(reservations.stream().map(ReservationDTO::fromDomain).toList());
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Delete a reservation",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public ResponseEntity<Void> deleteReservation(
+            @PathVariable UUID id,
+            HttpServletRequest request
+    ) {
+        this.reservationService.deleteReservationById(id, request);
+        return ResponseEntity.noContent().build();
+    }
 }
