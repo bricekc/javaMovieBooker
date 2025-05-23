@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -53,5 +54,15 @@ public class ReservationController {
     ) {
         Reservation reservation = this.reservationService.findById(id, request);
         return ResponseEntity.ok(ReservationDTO.fromDomain(reservation));
+    }
+
+    @GetMapping("")
+    @Operation(
+            summary = "Get reservations of one user",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public ResponseEntity<List<ReservationDTO>> findAllByUserId(HttpServletRequest request) {
+        List<Reservation> reservations = this.reservationService.findAllByUser(request);
+        return ResponseEntity.ok(reservations.stream().map(ReservationDTO::fromDomain).toList());
     }
 }

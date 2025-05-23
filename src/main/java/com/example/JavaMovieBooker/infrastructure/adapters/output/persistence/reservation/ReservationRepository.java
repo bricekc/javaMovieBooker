@@ -5,6 +5,7 @@ import com.example.JavaMovieBooker.domain.entities.Reservation;
 import com.example.JavaMovieBooker.infrastructure.adapters.output.persistence.user.UserEntity;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -25,6 +26,10 @@ public class ReservationRepository implements IReservationRepository {
         return jpaRepo.findById(id)
                 .map(this::convertToDomain)
                 .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+    }
+
+    public List<Reservation> findAllByUserId(UUID id) {
+        return jpaRepo.findAllByUserId(id).stream().map(this::convertToDomain).toList();
     }
 
     private Reservation convertToDomain(ReservationEntity reservationEntity) {
