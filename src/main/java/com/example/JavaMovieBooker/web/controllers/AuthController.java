@@ -4,6 +4,7 @@ import com.example.JavaMovieBooker.application.services.UserService;
 import com.example.JavaMovieBooker.domain.entities.User;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.CreateUserRequest;
 import com.example.JavaMovieBooker.infrastructure.adapters.input.rest.dto.LoginRequest;
+import com.example.JavaMovieBooker.web.dtos.LoginDTO;
 import com.example.JavaMovieBooker.web.dtos.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,12 +43,12 @@ public class AuthController {
 
     @Operation(summary = "Login a user")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginDTO> login(@RequestBody LoginRequest request) {
         try {
         String token = this.userService.login(request);
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(LoginDTO.fromDomain(token));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(401).body("Invalid credentials");
+            return ResponseEntity.badRequest().body(null);
         }
     }
 }
